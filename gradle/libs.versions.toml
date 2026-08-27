@@ -1,0 +1,15 @@
+[versions]
+kotlin = "2.4.0"
+intellij = "2.10.5"
+changelog = "2.5.0"
+junit = "4.13.2"
+jimmer = "0.11.7"
+
+[libraries]
+junit = { module = "junit:junit", version.ref = "junit" }
+jimmer-sql-kotlin = { module = "org.babyfish.jimmer:jimmer-sql-kotlin", version.ref = "jimmer" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+intellij-platform = { id = "org.jetbrains.intellij.platform", version.ref = "intellij" }
+changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
