@@ -6,4 +6,4 @@
 
 ### Added
 
-- Validation, completion and navigation for property names written as strings in `@ManyToMany(mappedBy)`, `@OneToOne(mappedBy)` and `@IdView`.
+- Report invalid property names in `mappedBy` of `@OneToOne`, `@OneToMany` and `@ManyToMany`.

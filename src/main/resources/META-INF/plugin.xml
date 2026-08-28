@@ -8,6 +8,8 @@
     <!-- Extensions defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <annotator language="JAVA" implementationClass="net.fallingangel.jimmercraft.annotator.JavaAnnotator"/>
+        <annotator language="kotlin" implementationClass="net.fallingangel.jimmercraft.annotator.KotlinAnnotator"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
