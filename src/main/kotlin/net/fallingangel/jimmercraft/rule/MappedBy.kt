@@ -1,10 +1,22 @@
 package net.fallingangel.jimmercraft.rule
 
 import com.intellij.lang.annotation.HighlightSeverity
+import net.fallingangel.jimmerdto.lsi.LClass
 import net.fallingangel.jimmerdto.lsi.LName
+import net.fallingangel.jimmerdto.lsi.LProperty
+import net.fallingangel.jimmerdto.lsi.annotation.hasAnnotation
+import net.fallingangel.jimmerdto.lsi.jimmer.JimmerAnnotations
 import net.fallingangel.jimmerdto.lsi.jimmer.isEntityAssociation
 
 class MappedBy(private val expectedInverse: LName) : Rule {
+    val isAssociation = LProperty::isEntityAssociation
+    val targetHostSelf: (LClass, LProperty) -> Boolean = { host, property -> host == property.targetClass }
+    val hasInverseAnnotation: (LProperty) -> Boolean = { it.hasAnnotation(expectedInverse) }
+    val noMappedByParam: (LProperty) -> Boolean = noMappedByParam@{ property ->
+        val annotation = property.annotations.find { it.fqName == expectedInverse.fqName } ?: return@noMappedByParam false
+        annotation.params.find { it.name == "mappedBy" }?.value == null
+    }
+
     override fun invoke(site: PropAnnotationSite): List<Diagnostic> {
         val (value, mappedBy) = site.param<String>("mappedBy") ?: return emptyList()
         val hostEntity = site.hostEntity
@@ -25,15 +37,13 @@ class MappedBy(private val expectedInverse: LName) : Rule {
             }
 
             // 属性类型是否为实体
-            if (!mappedByProp.isEntityAssociation) {
+            if (!isAssociation(mappedByProp)) {
                 add(Diagnostic("The property '$value' is not an association property", mappedBy, HighlightSeverity.ERROR))
                 return@buildList
             }
 
-            val mappedByTargetEntity = mappedByProp.targetClass
-
             // 属性实体是否指回当前实体
-            if (hostEntity != mappedByTargetEntity) {
+            if (!targetHostSelf(hostEntity, mappedByProp)) {
                 add(
                     Diagnostic(
                         "The association property '$value' does not target '${hostEntity.fqName}'",
@@ -44,8 +54,7 @@ class MappedBy(private val expectedInverse: LName) : Rule {
             }
 
             // 属性是否标注正确注解
-            val expectedAnnotation = mappedByProp.annotations.find { it.fqName == expectedInverse.fqName }
-            if (expectedAnnotation == null) {
+            if (!hasInverseAnnotation(mappedByProp)) {
                 add(
                     Diagnostic(
                         "The association property '$value' should be annotated with '${expectedInverse.fqName}'",
@@ -57,7 +66,7 @@ class MappedBy(private val expectedInverse: LName) : Rule {
             }
 
             // 对向注解是否也包含 mappedBy 参数
-            if (expectedAnnotation.params.find { it.name == "mappedBy" }?.value != null) {
+            if (!noMappedByParam(mappedByProp)) {
                 add(
                     Diagnostic(
                         "The association property '$value' is also declared with 'mappedBy'",
@@ -67,5 +76,20 @@ class MappedBy(private val expectedInverse: LName) : Rule {
                 )
             }
         }
+    }
+
+    fun candidates(host: LProperty): List<LProperty> {
+        return host.targetClass?.properties.orEmpty().filter {
+            isAssociation(it)
+                    && targetHostSelf(host.containingLClass, it)
+                    && hasInverseAnnotation(it)
+                    && noMappedByParam(it)
+        }
+    }
+
+    companion object {
+        val OneToMany = MappedBy(JimmerAnnotations.ManyToOne)
+        val ManyToMany = MappedBy(JimmerAnnotations.ManyToMany)
+        val OneToOne = MappedBy(JimmerAnnotations.OneToOne)
     }
 }

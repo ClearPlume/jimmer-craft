@@ -10,6 +10,19 @@
     <extensions defaultExtensionNs="com.intellij">
         <annotator language="JAVA" implementationClass="net.fallingangel.jimmercraft.annotator.JavaAnnotator"/>
         <annotator language="kotlin" implementationClass="net.fallingangel.jimmercraft.annotator.KotlinAnnotator"/>
+
+        <completion.confidence
+                language="JAVA"
+                implementationClass="net.fallingangel.jimmercraft.completion.JavaCompletionConfidence"
+                order="before javaSkipAutopopupInStrings"
+        />
+        <completion.confidence
+                language="kotlin"
+                implementationClass="net.fallingangel.jimmercraft.completion.KotlinCompletionConfidence"
+                order="before kotlinSkipAutopopupInStrings"
+        />
+        <completion.contributor language="JAVA" implementationClass="net.fallingangel.jimmercraft.completion.JavaCompletionContributor"/>
+        <completion.contributor language="kotlin" implementationClass="net.fallingangel.jimmercraft.completion.KotlinCompletionContributor"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">
