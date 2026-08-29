@@ -2,10 +2,13 @@ package net.fallingangel.jimmercraft.annotator
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
-import com.intellij.psi.*
+import com.intellij.psi.JavaElementVisitor
+import com.intellij.psi.JavaPsiFacade
+import com.intellij.psi.PsiAnnotation
+import com.intellij.psi.PsiElement
+import net.fallingangel.jimmercraft.host.host
 import net.fallingangel.jimmercraft.rule.AnnotationValue
 import net.fallingangel.jimmercraft.rule.PropAnnotationSite
-import net.fallingangel.jimmerdto.lsi.process
 import kotlin.reflect.KClass
 import kotlin.reflect.safeCast
 
@@ -16,14 +19,7 @@ class JavaAnnotator : Annotator {
 
     private class JavaAnnotatorVisitor(private val holder: AnnotationHolder) : JavaElementVisitor() {
         override fun visitAnnotation(annotation: PsiAnnotation) {
-            val annotationClass = annotation.resolveAnnotationType() ?: return
-            val annotationName = process(annotationClass) { className() } ?: return
-
-            val psiMethod = (annotation.owner as? PsiModifierList)?.parent as? PsiMethod ?: return
-            val entityClass = psiMethod.containingClass ?: return
-
-            val entity = process(entityClass) { lClass() } ?: return
-            val property = process(psiMethod) { lProperty(entity) } ?: return
+            val (annotationName, entity, property) = annotation.host() ?: return
 
             val site = object : PropAnnotationSite {
                 override val host = property
