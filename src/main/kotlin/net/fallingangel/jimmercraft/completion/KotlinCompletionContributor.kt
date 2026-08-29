@@ -3,7 +3,7 @@ package net.fallingangel.jimmercraft.completion
 import com.intellij.patterns.PsiJavaPatterns.psiElement
 import net.fallingangel.jimmercraft.facts.Completions
 import net.fallingangel.jimmercraft.facts.JimmerFacts
-import net.fallingangel.jimmercraft.host.host
+import net.fallingangel.jimmercraft.annotation.host
 import net.fallingangel.jimmerdto.lsi.LProperty
 import net.fallingangel.jimmerdto.util.parent
 import org.jetbrains.kotlin.lexer.KtTokens

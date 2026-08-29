@@ -3,7 +3,7 @@ package net.fallingangel.jimmercraft.annotator
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.Annotator
 import com.intellij.psi.PsiElement
-import net.fallingangel.jimmercraft.host.host
+import net.fallingangel.jimmercraft.annotation.host
 import net.fallingangel.jimmercraft.rule.AnnotationValue
 import net.fallingangel.jimmercraft.rule.PropAnnotationSite
 import org.jetbrains.kotlin.analysis.api.analyze

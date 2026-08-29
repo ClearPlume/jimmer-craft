@@ -7,7 +7,7 @@ import com.intellij.psi.PsiNameValuePair
 import com.intellij.psi.impl.source.tree.ElementType
 import net.fallingangel.jimmercraft.facts.Completions
 import net.fallingangel.jimmercraft.facts.JimmerFacts
-import net.fallingangel.jimmercraft.host.host
+import net.fallingangel.jimmercraft.annotation.host
 import net.fallingangel.jimmerdto.lsi.LProperty
 import net.fallingangel.jimmerdto.util.parent
 

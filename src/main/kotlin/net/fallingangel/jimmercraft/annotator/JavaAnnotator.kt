@@ -6,7 +6,7 @@ import com.intellij.psi.JavaElementVisitor
 import com.intellij.psi.JavaPsiFacade
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiElement
-import net.fallingangel.jimmercraft.host.host
+import net.fallingangel.jimmercraft.annotation.host
 import net.fallingangel.jimmercraft.rule.AnnotationValue
 import net.fallingangel.jimmercraft.rule.PropAnnotationSite
 import kotlin.reflect.KClass

@@ -1,4 +1,4 @@
-package net.fallingangel.jimmercraft.host
+package net.fallingangel.jimmercraft.annotation
 
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiMethod
