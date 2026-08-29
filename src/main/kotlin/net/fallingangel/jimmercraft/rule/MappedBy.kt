@@ -1,6 +1,7 @@
 package net.fallingangel.jimmercraft.rule
 
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.psi.PsiElement
 import net.fallingangel.jimmerdto.lsi.LClass
 import net.fallingangel.jimmerdto.lsi.LName
 import net.fallingangel.jimmerdto.lsi.LProperty
@@ -85,6 +86,10 @@ class MappedBy(private val expectedInverse: LName) : Rule {
                     && hasInverseAnnotation(it)
                     && noMappedByParam(it)
         }
+    }
+
+    fun resolve(host: LProperty, value: String): PsiElement? {
+        return host.targetClass?.findProperty(value)?.dependencyItem
     }
 
     companion object {

@@ -18,6 +18,8 @@ fun <T : Any> PsiAnnotation.param(name: String, type: KClass<T>): AnnotationValu
     return AnnotationValue(value, annotationMemberValue)
 }
 
+inline fun <reified T : Any> PsiAnnotation.param(name: String) = param(name, T::class)
+
 fun <T : Any> KtAnnotationEntry.param(name: String, type: KClass<T>): AnnotationValue<T>? {
     val expression = valueArguments
         .find { it.getArgumentName()?.asName?.asString() == name }
@@ -27,3 +29,5 @@ fun <T : Any> KtAnnotationEntry.param(name: String, type: KClass<T>): Annotation
     val value = type.safeCast(constant.value) ?: return null
     return AnnotationValue(value, expression)
 }
+
+inline fun <reified T : Any> KtAnnotationEntry.param(name: String) = param(name, T::class)
