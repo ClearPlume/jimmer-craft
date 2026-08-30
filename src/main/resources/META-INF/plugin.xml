@@ -24,8 +24,8 @@
         <completion.contributor language="JAVA" implementationClass="net.fallingangel.jimmercraft.completion.JavaCompletionContributor"/>
         <completion.contributor language="kotlin" implementationClass="net.fallingangel.jimmercraft.completion.KotlinCompletionContributor"/>
 
-        <psi.referenceContributor language="JAVA" implementation="net.fallingangel.jimmercraft.refenerce.JavaReferenceContributor"/>
-        <psi.referenceContributor language="kotlin" implementation="net.fallingangel.jimmercraft.refenerce.KotlinReferenceContributor"/>
+        <psi.referenceContributor language="JAVA" implementation="net.fallingangel.jimmercraft.reference.JavaReferenceContributor"/>
+        <psi.referenceContributor language="kotlin" implementation="net.fallingangel.jimmercraft.reference.KotlinReferenceContributor"/>
     </extensions>
 
     <extensions defaultExtensionNs="org.jetbrains.kotlin">

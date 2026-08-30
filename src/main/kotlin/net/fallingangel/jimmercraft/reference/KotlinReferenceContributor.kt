@@ -1,4 +1,4 @@
-package net.fallingangel.jimmercraft.refenerce
+package net.fallingangel.jimmercraft.reference
 
 import com.intellij.openapi.util.TextRange
 import com.intellij.patterns.PsiJavaPatterns.psiElement
