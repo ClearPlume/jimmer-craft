@@ -22,7 +22,7 @@ val ideVersion = "2024.3"
 val sinceVersion = "243"
 val untilVersion = "262.*"
 
-val jimmerDtoVersion = "0.0.8.1"
+val jimmerDtoVersion = "0.1.0"
 
 val userHome: String = System.getProperty("user.home")
 val certificateChainFileValue = file("$userHome/.gradle/chain.crt")

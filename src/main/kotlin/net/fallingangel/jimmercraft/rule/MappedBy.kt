@@ -5,7 +5,6 @@ import com.intellij.psi.PsiElement
 import net.fallingangel.jimmerdto.lsi.LClass
 import net.fallingangel.jimmerdto.lsi.LName
 import net.fallingangel.jimmerdto.lsi.LProperty
-import net.fallingangel.jimmerdto.lsi.annotation.hasAnnotation
 import net.fallingangel.jimmerdto.lsi.jimmer.JimmerAnnotations
 import net.fallingangel.jimmerdto.lsi.jimmer.isEntityAssociation
 
@@ -14,8 +13,8 @@ class MappedBy(private val expectedInverse: LName) : Rule {
     val targetHostSelf: (LClass, LProperty) -> Boolean = { host, property -> host == property.targetClass }
     val hasInverseAnnotation: (LProperty) -> Boolean = { it.hasAnnotation(expectedInverse) }
     val noMappedByParam: (LProperty) -> Boolean = noMappedByParam@{ property ->
-        val annotation = property.annotations.find { it.fqName == expectedInverse.fqName } ?: return@noMappedByParam false
-        annotation.params.find { it.name == "mappedBy" }?.value == null
+        val annotation = property.findAnnotation(expectedInverse) ?: return@noMappedByParam false
+        annotation.findParam("mappedBy")?.value == null
     }
 
     override fun invoke(site: PropAnnotationSite): List<Diagnostic> {
