@@ -5,7 +5,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     java
-    antlr
 
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.intellij.platform)
