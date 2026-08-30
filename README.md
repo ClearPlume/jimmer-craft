@@ -40,3 +40,19 @@ Rename that property, or mistype the name, and nothing tells you until the annot
     - it already declares its own `mappedBy`
 - completes the properties that can be the inverse side
 - navigates to the property declaration on Ctrl+Click
+
+The name resolves to a property, and hovering shows it.
+
+![Quick documentation on a resolved mappedBy value](https://raw.githubusercontent.com/ClearPlume/jimmer-craft/master/docs/images/mappedby-doc-java.png)
+
+Ctrl+hover previews the declaration; Ctrl+Click goes there.
+
+![Declaration preview on Ctrl+hover](https://raw.githubusercontent.com/ClearPlume/jimmer-craft/master/docs/images/mappedby-navigate-kotlin.png)
+
+A name that points somewhere else is reported in place.
+
+![Error on a mappedBy value that points elsewhere](https://raw.githubusercontent.com/ClearPlume/jimmer-craft/master/docs/images/mappedby-inverse-java.png)
+
+Completion offers only the properties that can be the inverse side.
+
+![Completion popup inside mappedBy](https://raw.githubusercontent.com/ClearPlume/jimmer-craft/master/docs/images/mappedby-completion-kotlin.png)
