@@ -16,16 +16,27 @@ JimmerCraft depends on [JimmerDTO](https://plugins.jetbrains.com/plugin/22618), 
 
 Install JimmerDTO alone if you only write `.dto` files.
 
+JimmerCraft works in both Java and Kotlin.
+
 ## Features
 
 ### Property names written as strings
 
-Annotations such as `@OneToMany(mappedBy = "...")`, `@ManyToMany(mappedBy = "...")` and `@OneToOne(mappedBy = "...")` carry property names as plain strings that the IDE never checks.
+Jimmer annotations carry property names as plain strings; the IDE checks none of them.
 
-JimmerCraft resolves them against the target entity:
+JimmerCraft resolves them against the entity model. Covered so far:
 
-- reports names the target entity does not declare
-- completes the available properties
-- navigates to the property declaration (Ctrl+Click)
+#### `mappedBy` — `@OneToOne`, `@OneToMany`, `@ManyToMany`
 
-Works in both Java and Kotlin.
+`mappedBy` names a property on the target entity.
+
+Rename that property, or mistype the name, and nothing tells you until the annotation processor runs.
+
+- reports invalid names
+    - no such property on the target entity
+    - the property is not an association
+    - it does not point back to this entity
+    - it lacks the matching annotation
+    - it already declares its own `mappedBy`
+- completes the properties that can be the inverse side
+- navigates to the property declaration on Ctrl+Click
