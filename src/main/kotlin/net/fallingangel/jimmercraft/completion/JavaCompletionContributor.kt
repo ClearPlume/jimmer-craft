@@ -5,9 +5,10 @@ import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiLiteralExpression
 import com.intellij.psi.PsiNameValuePair
 import com.intellij.psi.impl.source.tree.ElementType
+import net.fallingangel.jimmercraft.annotation.host
+import net.fallingangel.jimmercraft.annotation.name
 import net.fallingangel.jimmercraft.facts.Completions
 import net.fallingangel.jimmercraft.facts.JimmerFacts
-import net.fallingangel.jimmercraft.annotation.host
 import net.fallingangel.jimmerdto.lsi.LProperty
 import net.fallingangel.jimmerdto.util.parent
 
@@ -28,12 +29,13 @@ class JavaCompletionContributor : CompletionContributor() {
                 .inside(PsiAnnotation::class.java),
         ) { parameters, result ->
             val annotation = parameters.position.parent<PsiAnnotation>() ?: return@complete
+            val annotationName = annotation.name() ?: return@complete
 
             val parameter = parameters.position.parent<PsiNameValuePair>() ?: return@complete
-            val parameterName = parameter.name ?: "value"
+            val parameterName = parameter.name()
 
-            val (annotationName, _, property) = annotation.host() ?: return@complete
             val candidate = JimmerFacts[Completions, annotationName to parameterName] ?: return@complete
+            val (_, property) = annotation.host() ?: return@complete
             result.addAllElements(candidate(property).map(LProperty::lookupProperty))
         }
     }

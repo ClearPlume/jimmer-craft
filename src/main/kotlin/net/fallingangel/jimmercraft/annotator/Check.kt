@@ -1,13 +1,11 @@
 package net.fallingangel.jimmercraft.annotator
 
 import com.intellij.lang.annotation.AnnotationHolder
-import net.fallingangel.jimmercraft.facts.JimmerFacts
-import net.fallingangel.jimmercraft.facts.Rules
 import net.fallingangel.jimmercraft.rule.PropAnnotationSite
-import net.fallingangel.jimmerdto.lsi.LName
+import net.fallingangel.jimmercraft.rule.Rule
 
-fun AnnotationHolder.check(name: LName, site: PropAnnotationSite) {
-    val diagnostics = JimmerFacts[Rules, name].flatMap { it(site) }
+fun AnnotationHolder.check(site: PropAnnotationSite, rules: List<Rule>) {
+    val diagnostics = rules.flatMap { it(site) }
 
     diagnostics.forEach { diagnostic ->
         val fixerBuilder = newAnnotation(diagnostic.severity, diagnostic.message)
