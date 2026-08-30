@@ -10,7 +10,10 @@ import net.fallingangel.jimmerdto.lsi.jimmer.isEntityAssociation
 
 class MappedBy(private val expectedInverse: LName) : Rule {
     val isAssociation = LProperty::isEntityAssociation
-    val targetHostSelf: (LClass, LProperty) -> Boolean = { host, property -> host == property.targetClass }
+    val targetHostSelf: (LClass, LProperty) -> Boolean = targetHostSelf@{ host, property ->
+        val targetHost = property.targetClass ?: return@targetHostSelf false
+        host == targetHost || host in targetHost.allParents
+    }
     val hasInverseAnnotation: (LProperty) -> Boolean = { it.hasAnnotation(expectedInverse) }
     val noMappedByParam: (LProperty) -> Boolean = noMappedByParam@{ property ->
         val annotation = property.findAnnotation(expectedInverse) ?: return@noMappedByParam false
