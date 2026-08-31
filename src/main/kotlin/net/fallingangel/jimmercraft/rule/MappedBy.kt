@@ -82,7 +82,7 @@ class MappedBy(private val expectedInverse: LName) : Rule {
     }
 
     fun candidates(host: LProperty): List<LProperty> {
-        return host.targetClass?.properties.orEmpty().filter {
+        return host.targetClass?.allProperties.orEmpty().filter {
             isAssociation(it)
                     && targetHostSelf(host.containingLClass, it)
                     && hasInverseAnnotation(it)
